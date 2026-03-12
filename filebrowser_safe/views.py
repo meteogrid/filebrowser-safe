@@ -2,7 +2,7 @@ import os
 import re
 from json import dumps
 
-from django import forms
+from django import forms, get_version
 from django.conf import settings as django_settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -39,20 +39,23 @@ from filebrowser_safe.templatetags.fb_tags import query_helper
 try:
     from mezzanine.utils.html import escape
 except ImportError:
-    escape = lambda s: s  # noqa
+    def escape(s): return s  # noqa
 
-
+if get_version() > '4':
+    DEFAULT_FILE_STORAGE = django_settings.STORAGES['default']['BACKEND']
+else:
+    DEFAULT_FILE_STORAGE = django_settings.DEFAULT_FILE_STORAGE
 # Add some required methods to FileSystemStorage
-storage_class_name = django_settings.DEFAULT_FILE_STORAGE.split(".")[-1]
+storage_class_name = DEFAULT_FILE_STORAGE.split(".")[-1]
 mixin_class_name = "filebrowser_safe.storage.%sMixin" % storage_class_name
 
 # Workaround for django-s3-folder-storage
-if django_settings.DEFAULT_FILE_STORAGE == "s3_folder_storage.s3.DefaultStorage":
+if DEFAULT_FILE_STORAGE == "s3_folder_storage.s3.DefaultStorage":
     mixin_class_name = "filebrowser_safe.storage.S3BotoStorageMixin"
 
 try:
     mixin_class = import_string(mixin_class_name)
-    storage_class = import_string(django_settings.DEFAULT_FILE_STORAGE)
+    storage_class = import_string(DEFAULT_FILE_STORAGE)
 except ImportError:
     pass
 else:
