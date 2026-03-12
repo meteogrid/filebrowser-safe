@@ -14,55 +14,22 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Django 2.2
-          - tox-env: "py36-dj22"
-            python-version: "3.6"
-          - tox-env: "py37-dj22"
-            python-version: "3.7"
-          - tox-env: "py38-dj22"
-            python-version: "3.8"
-          - tox-env: "py39-dj22"
-            python-version: "3.9"
-          # Django 3.0
-          - tox-env: "py36-dj30"
-            python-version: "3.6"
-          - tox-env: "py37-dj30"
-            python-version: "3.7"
-          - tox-env: "py38-dj30"
-            python-version: "3.8"
-          - tox-env: "py39-dj30"
-            python-version: "3.9"
-          # Django 3.1
-          - tox-env: "py36-dj31"
-            python-version: "3.6"
-          - tox-env: "py37-dj31"
-            python-version: "3.7"
-          - tox-env: "py38-dj31"
-            python-version: "3.8"
-          - tox-env: "py39-dj31"
-            python-version: "3.9"
-          # Django 3.2
-          - tox-env: "py36-dj32"
-            python-version: "3.6"
-          - tox-env: "py37-dj32"
-            python-version: "3.7"
-          - tox-env: "py38-dj32"
-            python-version: "3.8"
-          - tox-env: "py39-dj32"
-            python-version: "3.9"
-          - tox-env: "py310-dj32"
+          # Django 5.2
+          - tox-env: "py310-dj52"
             python-version: "3.10"
-          # Django 4.0
-          - tox-env: "py38-dj40"
-            python-version: "3.8"
-          - tox-env: "py39-dj40"
-            python-version: "3.9"
-          - tox-env: "py310-dj40"
-            python-version: "3.10"
+          # Django 5.2
+          - tox-env: "py311-dj52"
+            python-version: "3.11"
+          # Django 5.2
+          - tox-env: "py312-dj52"
+            python-version: "3.12"
+          # Django 5.2
+          - tox-env: "py313-dj52"
+            python-version: "3.13"
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
@@ -78,8 +45,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
         with:
           python-version: 3.9
       - name: Install dependencies
@@ -94,10 +61,10 @@ jobs:
     needs: [test, lint]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
         with:
-          python-version: 3.9
+          python-version: 3.10
       - uses: actions/setup-node@v2
         with:
           node-version: '14' # https://github.com/cycjimmy/semantic-release-action/issues/79#issuecomment-955463633
