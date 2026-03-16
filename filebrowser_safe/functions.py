@@ -18,13 +18,11 @@ except ImportError:
     # For now we just want to be able tu run the test suite without having mezzanine
     # installed, and this will do. Remove once filebrowser-safe is completely decoupled
     # from mezzanine.
-    warnings.warn(
-        """
+    warnings.warn("""
         You are using a placeholder implementation of the current_site_id function
         intended for test purposes only. If you're seeing this you might have a problem
         with your Mezzanine installation.
-        """
-    )
+        """)
 
     def current_site_id():
         return dj_settings.SITE_ID

@@ -39,10 +39,13 @@ from filebrowser_safe.templatetags.fb_tags import query_helper
 try:
     from mezzanine.utils.html import escape
 except ImportError:
-    def escape(s): return s  # noqa
 
-if get_version() > '4':
-    DEFAULT_FILE_STORAGE = django_settings.STORAGES['default']['BACKEND']
+    def escape(s):
+        return s  # noqa
+
+
+if get_version() > "4":
+    DEFAULT_FILE_STORAGE = django_settings.STORAGES["default"]["BACKEND"]
 else:
     DEFAULT_FILE_STORAGE = django_settings.DEFAULT_FILE_STORAGE
 # Add some required methods to FileSystemStorage
@@ -278,7 +281,7 @@ def mkdir(request):
                 )
                 return HttpResponseRedirect(redirect_url)
             except OSError as xxx_todo_changeme:
-                (errno, strerror) = xxx_todo_changeme.args
+                errno, strerror = xxx_todo_changeme.args
                 if errno == 13:
                     form.errors["dir_name"] = forms.utils.ErrorList(
                         [_("Permission denied.")]
@@ -558,7 +561,7 @@ def rename(request):
                 )
                 return HttpResponseRedirect(redirect_url)
             except OSError as xxx_todo_changeme1:
-                (errno, strerror) = xxx_todo_changeme1.args
+                errno, strerror = xxx_todo_changeme1.args
                 form.errors["name"] = forms.util.ErrorList([_("Error.")])
     else:
         file_basename = os.path.splitext(filename)[0]

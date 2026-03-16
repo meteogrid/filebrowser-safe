@@ -17,13 +17,11 @@ except ImportError:
     # For now we just want to be able tu run the test suite without having mezzanine
     # installed, and this will do. Remove once filebrowser-safe is completely decoupled
     # from mezzanine.
-    warnings.warn(
-        """
+    warnings.warn("""
         You are using a placeholder implementation of the thumbnail tag intended for
         test purposes only. If you're seeing this you might have a problem with your
         Mezzanine installation.
-        """
-    )
+        """)
 
     def thumbnail(image_url, *args, **kwargs):
         return image_url
